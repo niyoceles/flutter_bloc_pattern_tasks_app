@@ -27,15 +27,15 @@ class RecycleBin extends StatelessWidget {
           drawer: MyDrawer(),
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
+            children: [
               Center(
                 child: Chip(
                   label: Text(
-                    'Tasks',
+                    '${state.removedTasks.length} Tasks',
                   ),
                 ),
               ),
-              TasksList(tasksList: [])
+              TasksList(tasksList: state.removedTasks)
             ],
           ),
           floatingActionButton: FloatingActionButton(
