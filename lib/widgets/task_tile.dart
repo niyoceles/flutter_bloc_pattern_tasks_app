@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc_pattern_tasks_app/widgets/tasks_list.dart';
 
 import '../blocs/bloc_exports.dart';
 import '../models/task.dart';
@@ -11,14 +12,19 @@ class TaskTile extends StatelessWidget {
 
   final Task task;
 
+  void _removeOrDeleteTask(BuildContext ctx, Task task) {
+    task.isDeleted!
+        ? ctx.read<TasksBloc>().add(DeleteTask(task: task))
+        : ctx.read<TasksBloc>().add(RemoveTask(task: task));
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
         task.title,
         style: TextStyle(
-            decoration:
-                task.isDone! ? TextDecoration.lineThrough : null),
+            decoration: task.isDone! ? TextDecoration.lineThrough : null),
       ),
       trailing: Checkbox(
         value: task.isDone,
@@ -26,8 +32,7 @@ class TaskTile extends StatelessWidget {
           context.read<TasksBloc>().add(UpdateTask(task: task));
         },
       ),
-      onLongPress: () =>
-          context.read<TasksBloc>().add(DeleteTask(task: task)),
+      onLongPress: () => _removeOrDeleteTask(context, task),
     );
   }
 }

@@ -23,8 +23,9 @@ class MyDrawer extends StatelessWidget {
             BlocBuilder<TasksBloc, TasksState>(
               builder: (context, state) {
                 return GestureDetector(
-                  onTap: (() => Navigator.pushNamed(context, TasksScreen.id)),
-                  child:  ListTile(
+                  onTap: (() =>
+                      Navigator.pushReplacementNamed(context, TasksScreen.id)),
+                  child: ListTile(
                     leading: const Icon(Icons.folder_special),
                     title: const Text("My Tasks"),
                     trailing: Text('${state.allTasks.length}'),
@@ -33,13 +34,18 @@ class MyDrawer extends StatelessWidget {
               },
             ),
             const Divider(),
-            GestureDetector(
-              onTap: () => Navigator.pushNamed(context, RecycleBin.id),
-              child: const ListTile(
-                leading: Icon(Icons.folder_special),
-                title: Text("Recycle Bin"),
-                trailing: Text("0"),
-              ),
+            BlocBuilder<TasksBloc, TasksState>(
+              builder: (context, state) {
+                return GestureDetector(
+                  onTap: () =>
+                      Navigator.pushReplacementNamed(context, RecycleBin.id),
+                  child: ListTile(
+                    leading: const Icon(Icons.folder_special),
+                    title: const Text("Recycle Bin"),
+                    trailing: Text('${state.removedTasks.length}'),
+                  ),
+                );
+              },
             ),
           ],
         ),
