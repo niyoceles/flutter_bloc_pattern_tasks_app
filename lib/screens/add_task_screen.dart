@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc_pattern_tasks_app/services/generator_id.dart';
 
 import '../blocs/bloc_exports.dart';
 import '../models/task.dart';
@@ -38,7 +39,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   child: const Text("Cancel")),
               ElevatedButton(
                   onPressed: () {
-                    var task = Task(title: titleController.text);
+                    var task = Task(
+                        title: titleController.text, id: GUIDGen.generate());
                     context.read<TasksBloc>().add(AddTask(task: task));
                     titleController.clear();
                     Navigator.pop(context);
