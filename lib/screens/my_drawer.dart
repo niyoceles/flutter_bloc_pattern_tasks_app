@@ -47,6 +47,16 @@ class MyDrawer extends StatelessWidget {
                 );
               },
             ),
+            BlocBuilder<SwitchBloc, SwitchState>(
+              builder: (context, state) {
+              return Switch(
+                  value: state.switchValue,
+                  onChanged: (newValue) {
+                    newValue
+                        ? context.read<SwitchBloc>().add(SwitchOnEvent())
+                        : context.read<SwitchBloc>().add(SwitchOffEvent());
+                  });
+            })
           ],
         ),
       ),
